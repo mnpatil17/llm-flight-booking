@@ -1,5 +1,26 @@
 # Flight Booking
 
+### Example of existing functionality
+
+```
+   What city are you in now?: Chicago, IL
+   Where would you like to go?: I'd like to go to Mumbai, on Friday, and I'd like to come back on the following Saturday
+
+   Itinerary | Total Cost: 1117.72 USD
+   ORD to BOM
+        Flight 1: ZZ 5579  | ORD to BOM | June 02, 2023 at 00:46 to June 03, 2023 at 05:16
+   BOM to ORD
+        Flight 1: ZZ 5579  | BOM to ORD | June 10, 2023 at 06:58 to June 10, 2023 at 14:28
+
+   Itinerary | Total Cost: 1302.23 USD
+   ORD to BOM
+        Flight 1: AC 8910  | ORD to YYZ | June 02, 2023 at 15:40 to June 02, 2023 at 18:17
+        Flight 2: AC 42    | YYZ to DEL | June 02, 2023 at 20:10 to June 03, 2023 at 20:50
+        Flight 3: UK       | DEL to BOM | June 04, 2023 at 09:00 to June 04, 2023 at 11:15
+
+   [...]
+```
+
 ## Proof-of-Concept
 
 The proof-of-concept is now complete. At this time, we're able to:
@@ -59,4 +80,3 @@ If you turn on testing mode, the script will not make calls to OpenAI; instead i
 OpenAI API. This is useful when you're debugging the software-layer (i.e. the interactions with the flights).
 
 To run the end-to-end workflow, set `FLIGHT_TESTING_MODE` to `False`, and run the main section of `main.py` file.
-Change the prompt you'd like to run with in the `query_llm` function in that file.

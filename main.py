@@ -3,6 +3,7 @@ from get_flights import make_duffel_request
 import datetime
 
 FLIGHT_TESTING_MODE = False
+LLM_DEBUG_MODE = False
 
 
 def get_todays_date() -> str:
@@ -34,9 +35,11 @@ def query_llm(request, current_location):
 
 
 if __name__ == '__main__':
-    response = query_llm(
-        "Get me to paris on the first flight tomorrow, business class on United",
-        "New York, NY")
+
+    current_location = input("What city are you in now?: ")
+    prompt = input("Where would you like to go?: ")
+
+    response = query_llm(prompt, current_location)
 
     origin = response["origin"]
     destination = response["destination"]
@@ -47,14 +50,15 @@ if __name__ == '__main__':
     class_of_service = response["class_of_service"][0]
     preferred_carriers = response["preferred_carriers"]
 
-    print(origin)
-    print(destination)
-    print(departure_date)
-    print(return_date)
-    print(preferred_departure_time)
-    print(preferred_return_time)
-    print(class_of_service)
-    print(preferred_carriers)
+    if LLM_DEBUG_MODE:
+        print(origin)
+        print(destination)
+        print(departure_date)
+        print(return_date)
+        print(preferred_departure_time)
+        print(preferred_return_time)
+        print(class_of_service)
+        print(preferred_carriers)
 
     itinerary_offers = make_duffel_request(
         origin,
