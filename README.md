@@ -39,6 +39,8 @@ It is, however, not able to:
 
 ## Development
 
+#### Setup
+
 To develop, you need to have two tokens:
 
 1. [OpenAI](https://platform.openai.com/account/api-keys) - Create an OpenAI account, and get an API key. Then save it
@@ -49,3 +51,12 @@ To develop, you need to have two tokens:
 Then, install the following:
 
 1. `pip install openai`
+
+#### Development Workflow
+
+Because calls to OpenAI are expensive, in the `main.py` file, we have a boolean flag called `FLIGHT_TESTING_MODE`.
+If you turn on testing mode, the script will not make calls to OpenAI; instead it'll output a fake result from the
+OpenAI API. This is useful when you're debugging the software-layer (i.e. the interactions with the flights).
+
+To run the end-to-end workflow, set `FLIGHT_TESTING_MODE` to `False`, and run the main section of `main.py` file.
+Change the prompt you'd like to run with in the `query_llm` function in that file.
