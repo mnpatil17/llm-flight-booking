@@ -1,0 +1,74 @@
+Given a "User Input", a "User Current Location" and a "Current Date", return a JSON dictionary that has the following keys:
+- "origin": (required, non-empty) A list containing the IATA airport codes where the journey could start. There could be multiple; for example in New York there are 3 popular airports - LGA, EWR and JFK.
+- "destination": (required, non-empty) A list containing the IATA airport codes where the journey could end. Again, there could be multiple here as well.
+- "preferred_carriers": (optional) A list containing the IATA airline codes that the user prefers. For example, if the user preferred United Airlines and Lufthansa, this would return ["UA", "LH"]. This list could have multiple values, or could have no values, depending on the input.
+- "departure_date": (required) The date of departure from the origin (outbound leg), as an ISO-formatted date
+- "return_date": (optional) The date of departure from the destination back to the origin (inbound leg), as an ISO-formatted date. This is only necessary for return journeys
+- "preferred_departure_time": (optional) A string, "MORNING", "AFTERNOON", "EVENING" or "NIGHT" indicating the preferred time of flight for the outbound leg
+- "preferred_return_time": (optional) A string, "MORNING", "AFTERNOON", "EVENING" or "NIGHT" indicating the preferred time of flight for the inbound leg
+- "class_of_service": (required) This should be a list of strings, in descending order of preference of the user. The values of the list can be any of the following: "FIRST", "BUSINESS", "PREMIUM_ECONOMY", "ECONOMY". If the user provides no indication of class preference, return "ECONOMY".
+
+If a reasonable response cannot be constructed, respond with a JSON object that contains the following keys:
+- "error": (required) an explanation as to why the user's request was insufficient.
+
+Here are some examples to help you understand how to respond:
+
+User Request: "I'd like to go from New York City to San Francisco on September 23th around 9AM"
+User Current Location: "Pittsburgh, Pennsylvania"
+Current Date: 2023-01-13
+{
+    "origin": ["EWR", "JFK", "LGA"],
+    "destination": ["SFO", "SJC", "OAK"],
+    "preferred_carriers": [],
+    "departure_date": "2023-09-23",
+    "return_date": null,
+    "preferred_departure_time": "MORNING",
+    "preferred_return_time": null,
+    "class_of_service": ["ECONOMY"]
+}
+
+
+User Request: "I'd like to go from Cleveland to Seattle on Monday, returning next Friday. Find me a cheapest Delta flight in business."
+User Current Location: "London, England"
+Current Date: 2023-04-27
+Answer in JSON:
+{
+    "origin": ["CLE"],
+    "destination": ["SEA"],
+    "preferred_carriers": ["DL"],
+    "departure_date": "2023-05-01",
+    "return_date": "2023-05-05",
+    "preferred_departure_time": null,
+    "preferred_return_time": null,
+    "class_of_service": ["BUSINESS"]
+}
+
+User Request: "Get me on the first flight to Paris, tomorrow morning."
+User Current Location: "Chicago, IL"
+Current Date: 2023-04-27
+Answer in JSON:
+{
+    "origin": ["ORD", "MDW"],
+    "destination": ["CDG", "ORY"],
+    "preferred_carriers": [],
+    "departure_date": "2023-04-28",
+    "return_date": null,
+    "preferred_departure_time": "MORNING",
+    "preferred_return_time": null,
+    "class_of_service": ["ECONOMY"]
+}
+
+User Request: "I want to go to sleep"
+User Current Location: "Chicago, IL"
+Current Date: 2023-04-27
+Answer in JSON:
+{
+    "error": "We need at least a destination and a date to be able to make travel arrangements for you."
+}
+
+--
+
+User Request: {{request}}
+User Current Location: {{current_location}}
+Current Date: {{current_date}}
+Answer in JSON:
